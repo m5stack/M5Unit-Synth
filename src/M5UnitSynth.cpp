@@ -11,12 +11,14 @@ void M5UnitSynth::sendCMD(uint8_t *buffer, size_t size) {
 }
 
 void M5UnitSynth::setInstrument(uint8_t bank, uint8_t channel, uint8_t value) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x00, bank};
-    sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
-    uint8_t CMD_PROGRAM_CHANGE[] = {MIDI_CMD_PROGRAM_CHANGE | (channel & 0x0f),
-                                    value};
-    sendCMD(CMD_PROGRAM_CHANGE, sizeof(CMD_PROGRAM_CHANGE));
+    uint8_t CMD_CONTROL_CHANGE_1[] = {
+        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x00, bank};
+
+    sendCMD(CMD_CONTROL_CHANGE_1, sizeof(CMD_CONTROL_CHANGE_1));
+
+    uint8_t CMD_PROGRAM_CHANGE_2[] = {
+        MIDI_CMD_PROGRAM_CHANGE | (channel & 0x0f), value};
+    sendCMD(CMD_PROGRAM_CHANGE_2, sizeof(CMD_PROGRAM_CHANGE_2));
 }
 
 void M5UnitSynth::setNoteOn(uint8_t channel, uint8_t pitch, uint8_t velocity) {
@@ -36,7 +38,7 @@ void M5UnitSynth::setAllNotesOff(uint8_t channel) {
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 }
 
-void M5UnitSynth::setPitchBend(uint8_t channel, uint8_t value) {
+void M5UnitSynth::setPitchBend(uint8_t channel, int value) {
     value                    = map(value, 0, 1023, 0, 0x3fff);
     uint8_t CMD_PITCH_BEND[] = {MIDI_CMD_PITCH_BEND | (channel & 0x0f),
                                 (value & 0xef), ((value >> 7) & 0xff)};

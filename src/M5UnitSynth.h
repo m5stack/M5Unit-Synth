@@ -45,7 +45,7 @@ class M5UnitSynth {
     void setNoteOff(uint8_t channel, uint8_t pitch, uint8_t velocity);
     void setAllNotesOff(uint8_t channel);
 
-    void setPitchBend(uint8_t channel, uint8_t value);
+    void setPitchBend(uint8_t channel, int value);
     void setPitchBendRange(uint8_t channel, uint8_t value);
 
     void setMasterVolume(uint8_t level);             // 0-127
