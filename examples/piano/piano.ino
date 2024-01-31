@@ -1,7 +1,7 @@
 /**
- * @file piano.ino
+ * @file drum.ino
  * @author SeanKwok (shaoxiang@m5stack.com)
- * @brief Unit Synth Piano Example
+ * @brief Unit Synth Drum Example
  * @version 0.1
  * @date 2024-01-24
  *
@@ -22,32 +22,37 @@ M5UnitSynth synth;
 
 void setup() {
     M5.begin();
-
     M5.Display.setTextColor(GREEN);
     M5.Display.setTextDatum(middle_center);
     M5.Display.setTextSize(2);
-    M5.Display.drawString("Unit Synth Piano", M5.Display.width() / 2,
+    M5.Display.drawString("Unit Synth Drum", M5.Display.width() / 2,
                           M5.Display.height() / 2);
 
     synth.begin(&Serial2, UNIT_SYNTH_BAUD, 16, 17);
-    synth.setInstrument(0, 0, 1);  // synth piano 1
+    synth.setInstrument(0, 9, 119);  // synth drum
 }
 
 void loop() {
-    synth.setNoteOn(0, 60, 127);
-    delay(1000);
-    synth.setNoteOn(0, 62, 127);
-    delay(1000);
-    synth.setNoteOn(0, 64, 127);
-    delay(1000);
-    synth.setNoteOn(0, 65, 127);
-    delay(1000);
-    synth.setNoteOn(0, 67, 127);
-    delay(1000);
-    synth.setNoteOn(0, 69, 127);
-    delay(1000);
-    synth.setNoteOn(0, 71, 127);
-    delay(1000);
-    synth.setNoteOn(0, 72, 127);
-    delay(1000);
+    synth.setNoteOn(9, 36, 127);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 38, 127);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+
+    synth.setNoteOn(9, 36, 127);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 36, 127);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 38, 127);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
+    synth.setNoteOn(9, 42, 127);
+    delay(300);
 }

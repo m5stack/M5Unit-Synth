@@ -12,69 +12,78 @@ void M5UnitSynth::sendCMD(uint8_t *buffer, size_t size) {
 
 void M5UnitSynth::setInstrument(uint8_t bank, uint8_t channel, uint8_t value) {
     uint8_t CMD_CONTROL_CHANGE_1[] = {
-        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x00, bank};
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x00, bank};
 
     sendCMD(CMD_CONTROL_CHANGE_1, sizeof(CMD_CONTROL_CHANGE_1));
 
     uint8_t CMD_PROGRAM_CHANGE_2[] = {
-        MIDI_CMD_PROGRAM_CHANGE | (channel & 0x0f), value};
+        (uint8_t)(MIDI_CMD_PROGRAM_CHANGE | (channel & 0x0f)), value};
     sendCMD(CMD_PROGRAM_CHANGE_2, sizeof(CMD_PROGRAM_CHANGE_2));
 }
 
 void M5UnitSynth::setNoteOn(uint8_t channel, uint8_t pitch, uint8_t velocity) {
-    uint8_t CMD_NOTE_ON[] = {MIDI_CMD_NOTE_ON | (channel & 0x0f), pitch,
-                             velocity};
+    uint8_t CMD_NOTE_ON[] = {(uint8_t)(MIDI_CMD_NOTE_ON | (channel & 0x0f)),
+                             pitch, velocity};
     sendCMD(CMD_NOTE_ON, sizeof(CMD_NOTE_ON));
 }
 
 void M5UnitSynth::setNoteOff(uint8_t channel, uint8_t pitch, uint8_t velocity) {
-    uint8_t CMD_NOTE_OFF[] = {MIDI_CMD_NOTE_OFF | (channel & 0x0f), pitch,
-                              0x00};
+    uint8_t CMD_NOTE_OFF[] = {(uint8_t)(MIDI_CMD_NOTE_OFF | (channel & 0x0f)),
+                              pitch, 0x00};
     sendCMD(CMD_NOTE_OFF, sizeof(CMD_NOTE_OFF));
 }
 void M5UnitSynth::setAllNotesOff(uint8_t channel) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x7b, 0x00};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x7b, 0x00};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 }
 
 void M5UnitSynth::setPitchBend(uint8_t channel, int value) {
     value                    = map(value, 0, 1023, 0, 0x3fff);
-    uint8_t CMD_PITCH_BEND[] = {MIDI_CMD_PITCH_BEND | (channel & 0x0f),
-                                (value & 0xef), ((value >> 7) & 0xff)};
+    uint8_t CMD_PITCH_BEND[] = {
+        (uint8_t)(MIDI_CMD_PITCH_BEND | (channel & 0x0f)),
+        (uint8_t)(value & 0xef), (uint8_t)((value >> 7) & 0xff)};
     sendCMD(CMD_PITCH_BEND, sizeof(CMD_PITCH_BEND));
 }
 void M5UnitSynth::setPitchBendRange(uint8_t channel, uint8_t value) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x65,
-                                    0x00,
-                                    0x64,
-                                    0x00,
-                                    0x06,
-                                    (value & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x65,
+        0x00,
+        0x64,
+        0x00,
+        0x06,
+        (uint8_t)(value & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 }
 
 void M5UnitSynth::setMasterVolume(uint8_t level) {
-    uint8_t CMD_SYSTEM_EXCLUSIVE[] = {
-        MIDI_CMD_SYSTEM_EXCLUSIVE, 0x7f, 0x7f, 0x04, 0x01, 0x00, (level & 0x7f),
-        MIDI_CMD_END_OF_SYSEX};
+    uint8_t CMD_SYSTEM_EXCLUSIVE[] = {MIDI_CMD_SYSTEM_EXCLUSIVE,
+                                      0x7f,
+                                      0x7f,
+                                      0x04,
+                                      0x01,
+                                      0x00,
+                                      (uint8_t)(level & 0x7f),
+                                      MIDI_CMD_END_OF_SYSEX};
     sendCMD(CMD_SYSTEM_EXCLUSIVE, sizeof(CMD_SYSTEM_EXCLUSIVE));
 }
 void M5UnitSynth::setVolume(uint8_t channel, uint8_t level) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x07, level};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x07, level};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 }
 
 void M5UnitSynth::setReverb(uint8_t channel, uint8_t program, uint8_t level,
                             uint8_t delayfeedback) {
     uint8_t CMD_CONTROL_CHANGE_1[] = {
-        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x50, (program & 0x07)};
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x50,
+        (uint8_t)(program & 0x07)};
     sendCMD(CMD_CONTROL_CHANGE_1, sizeof(CMD_CONTROL_CHANGE_1));
 
     uint8_t CMD_CONTROL_CHANGE_2[] = {
-        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x5b, (level & 0x7f)};
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x5b,
+        (uint8_t)(level & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE_2, sizeof(CMD_CONTROL_CHANGE_2));
 
     if (delayfeedback > 0) {
@@ -86,7 +95,7 @@ void M5UnitSynth::setReverb(uint8_t channel, uint8_t program, uint8_t level,
                                           0x40,
                                           0x01,
                                           0x35,
-                                          (delayfeedback & 0x7f),
+                                          (uint8_t)(delayfeedback & 0x7f),
                                           0x00,
                                           MIDI_CMD_END_OF_SYSEX};
         sendCMD(CMD_SYSTEM_EXCLUSIVE, sizeof(CMD_SYSTEM_EXCLUSIVE));
@@ -96,11 +105,13 @@ void M5UnitSynth::setReverb(uint8_t channel, uint8_t program, uint8_t level,
 void M5UnitSynth::setChorus(uint8_t channel, uint8_t program, uint8_t level,
                             uint8_t feedback, uint8_t chorusdelay) {
     uint8_t CMD_CONTROL_CHANGE_1[] = {
-        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x51, (program & 0x07)};
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x51,
+        (uint8_t)(program & 0x07)};
     sendCMD(CMD_CONTROL_CHANGE_1, sizeof(CMD_CONTROL_CHANGE_1));
 
     uint8_t CMD_CONTROL_CHANGE_2[] = {
-        MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f), 0x5d, (level & 0x7f)};
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x5d,
+        (uint8_t)(level & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE_2, sizeof(CMD_CONTROL_CHANGE_2));
 
     if (feedback > 0) {
@@ -112,7 +123,7 @@ void M5UnitSynth::setChorus(uint8_t channel, uint8_t program, uint8_t level,
                                             0x40,
                                             0x01,
                                             0x3b,
-                                            (feedback & 0x7f),
+                                            (uint8_t)(feedback & 0x7f),
                                             0x00,
                                             MIDI_CMD_END_OF_SYSEX};
         sendCMD(CMD_SYSTEM_EXCLUSIVE_1, sizeof(CMD_SYSTEM_EXCLUSIVE_1));
@@ -127,7 +138,7 @@ void M5UnitSynth::setChorus(uint8_t channel, uint8_t program, uint8_t level,
                                             0x40,
                                             0x01,
                                             0x3c,
-                                            (feedback & 0x7f),
+                                            (uint8_t)(feedback & 0x7f),
                                             0x00,
                                             MIDI_CMD_END_OF_SYSEX
 
@@ -137,8 +148,8 @@ void M5UnitSynth::setChorus(uint8_t channel, uint8_t program, uint8_t level,
 }
 
 void M5UnitSynth::setPan(uint8_t channel, uint8_t value) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x0A, value};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)), 0x0A, value};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 }
 
@@ -147,13 +158,14 @@ void M5UnitSynth::setEqualizer(uint8_t channel, uint8_t lowband,
                                uint8_t highband, uint8_t lowfreq,
                                uint8_t medlowfreq, uint8_t medhighfreq,
                                uint8_t highfreq) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x63,
-                                    0x37,
-                                    0x62,
-                                    0x00,
-                                    0x06,
-                                    (lowband & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x63,
+        0x37,
+        0x62,
+        0x00,
+        0x06,
+        (uint8_t)(lowband & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
     CMD_CONTROL_CHANGE[4] = 0x01;
@@ -187,13 +199,14 @@ void M5UnitSynth::setEqualizer(uint8_t channel, uint8_t lowband,
 }
 
 void M5UnitSynth::setTuning(uint8_t channel, uint8_t fine, uint8_t coarse) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x65,
-                                    0x00,
-                                    0x64,
-                                    0x01,
-                                    0x06,
-                                    (fine & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x65,
+        0x00,
+        0x64,
+        0x01,
+        0x06,
+        (uint8_t)(fine & 0x7f)};
 
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
@@ -204,13 +217,14 @@ void M5UnitSynth::setTuning(uint8_t channel, uint8_t fine, uint8_t coarse) {
 }
 void M5UnitSynth::setVibrate(uint8_t channel, uint8_t rate, uint8_t depth,
                              uint8_t delay) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x63,
-                                    0x01,
-                                    0x62,
-                                    0x08,
-                                    0x06,
-                                    (rate & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x63,
+        0x01,
+        0x62,
+        0x08,
+        0x06,
+        (uint8_t)(rate & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
     CMD_CONTROL_CHANGE[4] = 0x09;
@@ -223,13 +237,14 @@ void M5UnitSynth::setVibrate(uint8_t channel, uint8_t rate, uint8_t depth,
 }
 
 void M5UnitSynth::setTvf(uint8_t channel, uint8_t cutoff, uint8_t resonance) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x63,
-                                    0x01,
-                                    0x62,
-                                    0x20,
-                                    0x06,
-                                    (cutoff & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x63,
+        0x01,
+        0x62,
+        0x20,
+        0x06,
+        (uint8_t)(cutoff & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
     CMD_CONTROL_CHANGE[4] = 0x21;
@@ -238,13 +253,15 @@ void M5UnitSynth::setTvf(uint8_t channel, uint8_t cutoff, uint8_t resonance) {
 }
 void M5UnitSynth::setEnvelope(uint8_t channel, uint8_t attack, uint8_t decay,
                               uint8_t release) {
-    uint8_t CMD_CONTROL_CHANGE[] = {MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f),
-                                    0x63,
-                                    0x01,
-                                    0x62,
-                                    0x63,
-                                    0x06,
-                                    (attack & 0x7f)};
+    uint8_t CMD_CONTROL_CHANGE[] = {
+
+        (uint8_t)(MIDI_CMD_CONTROL_CHANGE | (channel & 0x0f)),
+        0x63,
+        0x01,
+        0x62,
+        0x63,
+        0x06,
+        (uint8_t)(attack & 0x7f)};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
     CMD_CONTROL_CHANGE[4] = 0x64;
@@ -266,7 +283,7 @@ void M5UnitSynth::setModWheel(uint8_t channel, uint8_t pitch, uint8_t tvtcutoff,
                                     0x42,
                                     0x12,
                                     0x40,
-                                    0x20 | (channel & 0x0f),
+                                    (uint8_t)(0x20 | (channel & 0x0f)),
                                     0x00,
                                     pitch,
                                     0x00,
@@ -312,7 +329,7 @@ void M5UnitSynth::setAllInstrumentDrums() {
                                     MIDI_CMD_END_OF_SYSEX};
     sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
 
-    for (uint8_t i = 1; i++; i < 15) {
+    for (uint8_t i = 1; i < 15; i++) {
         CMD_CONTROL_CHANGE[6] = i;
         sendCMD(CMD_CONTROL_CHANGE, sizeof(CMD_CONTROL_CHANGE));
     }
