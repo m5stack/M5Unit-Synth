@@ -37,7 +37,7 @@ class M5UnitSynth {
     void sendCMD(uint8_t *buffer, size_t size);
 
    public:
-    void begin(HardwareSerial *serial = &Serial2, int baud = UNIT_SYNTH_BAUD,
+    void begin(HardwareSerial *serial = &Serial1, int baud = UNIT_SYNTH_BAUD,
                uint8_t RX = 16, uint8_t TX = 17);
 
     void setInstrument(uint8_t bank, uint8_t channel, uint8_t value);
