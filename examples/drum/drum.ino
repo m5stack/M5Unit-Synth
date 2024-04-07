@@ -2,34 +2,25 @@
  * @file drum.ino
  * @author SeanKwok (shaoxiang@m5stack.com)
  * @brief Unit Synth Drum Example
- * @version 0.1
- * @date 2024-01-24
+ * @version 0.2
+ * @date 2024-04-07
  *
  *
  * @Hardwares: M5Core + Unit Synth
  * @Platform Version: Arduino M5Stack Board Manager v2.1.0
  * @Dependent Library:
- * M5Unified: https://github.com/m5stack/M5Unified
- * M5GFX: https://github.com/m5stack/M5GFX
  * M5UnitSynth: https://github.com/m5stack/M5Unit-Synth
  */
 
-#include <M5Unified.h>
-#include <M5GFX.h>
 #include "M5UnitSynth.h"
 
 M5UnitSynth synth;
 
 void setup() {
-    M5.begin();
-    M5.Display.setTextColor(GREEN);
-    M5.Display.setTextDatum(middle_center);
-    M5.Display.setTextSize(2);
-    M5.Display.drawString("Unit Synth Drum", M5.Display.width() / 2,
-                          M5.Display.height() / 2);
-
+    Serial.begin(115200);
+    Serial.println("Unit Synth Drum");
     synth.begin(&Serial2, UNIT_SYNTH_BAUD, 16, 17);
-    synth.setInstrument(0, 9, 119);  // synth drum
+    synth.setInstrument(0, 9, SynthDrum);  // synth drum
 }
 
 void loop() {

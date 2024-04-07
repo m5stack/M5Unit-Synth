@@ -1,6 +1,7 @@
 #ifndef _M5_UNIT_SYNTH_H
 #define _M5_UNIT_SYNTH_H
 
+#include "M5UnitSynthDef.h"
 #include "Arduino.h"
 
 #define UNIT_SYNTH_BAUD 31250
