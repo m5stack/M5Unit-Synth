@@ -18,9 +18,5 @@
         "espressif32",
         "native"
     ],
-    "headers": "M5UnitSynth.h",
-    "dependencies": {
-        "M5Unified": "*",
-        "M5GFX": "*"
-    }
+    "headers": "M5UnitSynth.h"
 }
