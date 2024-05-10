@@ -24,20 +24,20 @@ void setup() {
 }
 
 void loop() {
-    synth.setNoteOn(0, 60, 127);
+    synth.setNoteOn(0, NOTE_C4, 127);
     delay(1000);
-    synth.setNoteOn(0, 62, 127);
+    synth.setNoteOn(0, NOTE_D4, 127);
     delay(1000);
-    synth.setNoteOn(0, 64, 127);
+    synth.setNoteOn(0, NOTE_E4, 127);
     delay(1000);
-    synth.setNoteOn(0, 65, 127);
+    synth.setNoteOn(0, NOTE_F4, 127);
     delay(1000);
-    synth.setNoteOn(0, 67, 127);
+    synth.setNoteOn(0, NOTE_G4, 127);
     delay(1000);
-    synth.setNoteOn(0, 69, 127);
+    synth.setNoteOn(0, NOTE_A4, 127);
     delay(1000);
-    synth.setNoteOn(0, 71, 127);
+    synth.setNoteOn(0, NOTE_B4, 127);
     delay(1000);
-    synth.setNoteOn(0, 72, 127);
+    synth.setNoteOn(0, NOTE_C5, 127);
     delay(1000);
 }
