@@ -93,7 +93,7 @@
 #define REST     0
 
 typedef enum {
-    GrandPiano_1 = 1,
+    GrandPiano_1 = 0,
     BrightPiano_2,
     ElGrdPiano_3,
     HonkyTonkPiano,
